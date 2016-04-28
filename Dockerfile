@@ -10,6 +10,6 @@ RUN apk add --no-cache bash curl make \
  && tar -zxvf "/tmp/v${BATS_VERSION}.tar.gz" -C /tmp/ \
  && bash "/tmp/bats-${BATS_VERSION}/install.sh" /usr/local \
  && rm -rf /tmp/* \
- && apk del curl make
+ && apk del make
 
 ENTRYPOINT ["/usr/local/bin/bats"]
