@@ -1,15 +1,11 @@
-FROM dylanfoster/docker
+FROM bats/bats
 
-ENV BATS_VERSION 0.4.0
+ENV DOCKER_VERSION 24.0.5
 
-USER root
-
-RUN apk add --no-cache bash curl make \
- && curl -sSL "https://github.com/sstephenson/bats/archive/v${BATS_VERSION}.tar.gz" \
-          -o "/tmp/v${BATS_VERSION}.tar.gz" \
- && tar -zxvf "/tmp/v${BATS_VERSION}.tar.gz" -C /tmp/ \
- && bash "/tmp/bats-${BATS_VERSION}/install.sh" /usr/local \
- && rm -rf /tmp/* \
- && apk del make
-
-ENTRYPOINT ["/usr/local/bin/bats"]
+RUN apk add --no-cache curl \
+      && curl -fsSl "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" \
+      -o "docker-${DOCKER_VERSION}.tgz" \
+      && tar zxvf "docker-${DOCKER_VERSION}.tgz" \
+      && mv docker/* /usr/bin/ \
+      && rm "docker-${DOCKER_VERSION}.tgz" \
+      && apk del curl
